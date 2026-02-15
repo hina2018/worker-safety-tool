@@ -17,21 +17,46 @@ def check_password():
             st.session_state["password_correct"] = False
 
     if "password_correct" not in st.session_state:
-        st.text_input(
-            "パスワードを入力してください",
-            type="password",
-            on_change=password_entered,
-            key="password"
-        )
+        # ウェルカム画面
+        st.markdown("<h1 style='text-align: center;'>📋 ワーカー向け案件安全化ツール</h1>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align: center; color: #666;'>案件選びから納品まで、非承認・修正リスクを最小化</h3>", unsafe_allow_html=True)
+        st.markdown("---")
+        
+        # 中央寄せのコンテナ
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.markdown("### 🔐 購入者専用ページ")
+            st.markdown("パスワードを入力してツールにアクセスしてください")
+            st.text_input(
+                "パスワード",
+                type="password",
+                on_change=password_entered,
+                key="password",
+                placeholder="購入時にお送りしたパスワードを入力"
+            )
+            st.info("💡 パスワードは購入時のメールに記載されています")
+        
         return False
     elif not st.session_state["password_correct"]:
-        st.text_input(
-            "パスワードを入力してください",
-            type="password",
-            on_change=password_entered,
-            key="password"
-        )
-        st.error("パスワードが違います")
+        # エラー時の画面
+        st.markdown("<h1 style='text-align: center;'>📋 ワーカー向け案件安全化ツール</h1>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align: center; color: #666;'>案件選びから納品まで、非承認・修正リスクを最小化</h3>", unsafe_allow_html=True)
+        st.markdown("---")
+        
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.markdown("### 🔐 購入者専用ページ")
+            st.markdown("パスワードを入力してツールにアクセスしてください")
+            st.text_input(
+                "パスワード",
+                type="password",
+                on_change=password_entered,
+                key="password",
+                placeholder="購入時にお送りしたパスワードを入力"
+            )
+            st.error("❌ パスワードが違います。もう一度お試しください。")
+            st.info("💡 パスワードは購入時のメールに記載されています")
+        
         return False
     else:
         return True
